@@ -21,7 +21,8 @@ class Audio:
     def __deinit__(self):
         os.remove("tmp.wav")
         os.remove("tmp.mp3")
-    def play_spatial_audio(self, file_path):
+        
+    def __play_spatial_audio(self, file_path):
         # Load the .wav file
         source = oalOpen(file_path)
 
@@ -42,7 +43,7 @@ class Audio:
         audio.export(wav_path, format="wav")
    
    
-    def text_to_speech(self, position, text):
+    def __text_to_speech(self, position, text):
         self.position = position
         self.text = text
         if(text == ""):
@@ -55,8 +56,10 @@ class Audio:
         
         # convert to wav so that openal can play it
         self.__convert_mp3_to_wav('tmp.mp3', 'tmp.wav') 
-        self.play_spatial_audio("tmp.wav")
-            
+        self.__play_spatial_audio("tmp.wav")
+         
+    def run(self, arr):
+        self.__text_to_speech(arr[1], arr[0])
     
 # if __name__ == "__main__":
 #     audio = Audio(voice="co.uk", slow=False)
