@@ -59,7 +59,7 @@ class Audio:
         self.__play_spatial_audio("tmp.wav")
          
     def run(self, arr):
-        self.__text_to_speech(arr[1], arr[0])
+        self.__text_to_speech(arr[1], str(arr[0]))
     
 # if __name__ == "__main__":
 #     audio = Audio(voice="co.uk", slow=False)
