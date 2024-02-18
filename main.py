@@ -46,10 +46,11 @@ def record():
     print(f"Audio saved as: {file_path}")
 
 def waitState():
+    print("Entering Wait State")
     while GPIO.input(VOICE_INPUT_PIN) == GPIO.LOW:
         time.sleep(.01)
     record()
-
+    print("Exiting Wait")
     converter = SpeechToText()
     function, filter = converter.take_voice_command()
 
@@ -59,23 +60,25 @@ def waitState():
         whereState(filter)
 
 def whereState(filter):
+    print("Entering Where")
     cam = CameraDriver(0,1)
     left_detection, right_detection = cam.detect()
     syn = Synthesis(left_detection, right_detection, filter=filter)
     output = syn.output()
 
     audio = Audio()
-    audio.run()
+    audio.run(output)
 
 
 def whatState():
+    print("Entering What")
     cam = CameraDriver(0,1)
     left_detection, right_detection = cam.detect()
     syn = Synthesis(left_detection, right_detection)
     output = syn.output()
 
     audio = Audio()
-    audio.run()
+    audio.run(output)
 
 if __name__ == "__main__":
     while GPIO.input(EXIT_PIN) == GPIO.LOW:
