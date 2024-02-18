@@ -62,7 +62,10 @@ class Audio:
          
     def run(self, arr):
         for i in range(len(arr)):
-            self.__text_to_speech(arr[i][1], str(arr[i][0]))
+            if type(arr[i][1]) == list:
+                self.__text_to_speech(arr[i][1], str(arr[i][0]))
+            else:
+                self.__text_to_speech([0,0,0], str(arr[i][0]))
     
 # if __name__ == "__main__":
 #     audio = Audio(voice="co.uk", slow=False)
