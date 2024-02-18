@@ -8,7 +8,7 @@ import pyaudio
 import soundfile as sf
 
 EXIT_PIN = 18
-VOICE_INPUT_PIN = 15
+VOICE_INPUT_PIN = 23
 SAMPLE_RATE = 48000
 
 GPIO.setmode(GPIO.BCM)
