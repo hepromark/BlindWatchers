@@ -10,7 +10,7 @@ import soundfile as sf
 EXIT_PIN = 18
 VOICE_INPUT_PIN = 23
 SAMPLE_RATE = 48000
-
+print("INITIALIZE")
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(EXIT_PIN, GPIO.IN)
 GPIO.setup(VOICE_INPUT_PIN, GPIO.IN)
@@ -81,6 +81,7 @@ def whatState():
     audio.run(output)
 
 if __name__ == "__main__":
+    print("Entering Main")
     while GPIO.input(EXIT_PIN) == GPIO.LOW:
         waitState()
     
