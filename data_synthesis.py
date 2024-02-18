@@ -120,7 +120,7 @@ class Synthesis:
         for key, value in object_freq.items():
             summary_sentence += f' {value} {key}s'
 
-        output = output.insert(0,[summary_sentence, [0, 0, 0]])
+        output.insert(0,[summary_sentence, [0, 0, 0]])
 
         return output
 
