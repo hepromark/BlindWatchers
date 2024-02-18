@@ -44,12 +44,12 @@ class Synthesis:
         if not isRight:
             x = x - self.width
         
-        angle = x / self.width * self.ANGLE
+        angleFromCenter = x / self.width * self.ANGLE
         
-        x = int(self.radius * math.sin(angle))
-        y = int(self.radius * math.cos(angle))
+        x = int(self.radius * math.sin(90 - angleFromCenter))
+        y = int(self.radius * math.cos(90 - angleFromCenter))
 
-        return angle, [x, y, 0]
+        return angleFromCenter, [x, y, 0]
     
     def getSentence(self, angle, isRight, className):
         #removing negative angle
