@@ -29,7 +29,7 @@ class CameraDriver():
         detections = self._process_frame([frame1, frame2])
         print(detections)
 
-    def _process_frame(self, frames):
+    def __process_frame__(self, frames):
         print("Processing frame....")
         print()
         output = [[], []]
@@ -64,7 +64,7 @@ class CameraDriver():
 
         return output
     
-    def _get_frame(self):
+    def __get_frame__(self):
         frame1 = 0
         frame2 = 0
 
