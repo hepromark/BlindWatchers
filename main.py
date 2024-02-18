@@ -40,7 +40,7 @@ def record():
     try:
         recorder.start()
 
-        while now + 100 > time.time():
+        while now + 10 > time.time():
             frame = recorder.read()
             audio.extend(frame)
         # Do something ...
