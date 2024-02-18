@@ -43,6 +43,7 @@ def record():
 
         while now + 10 > time.time():
             frame = recorder.read()
+            print(frame)
             audio.extend(frame)
         # Do something ...
     except KeyboardInterrupt:
