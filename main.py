@@ -7,6 +7,7 @@ import time
 import wave
 import struct
 import pyaudio
+import os
 import soundfile as sf
 from pvrecorder import PvRecorder
 
@@ -17,44 +18,52 @@ VOICE_INPUT_PIN = 16
 SAMPLE_RATE = 48000
 print("INITIALIZE")
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(EXIT_PIN, GPIO.IN)
-GPIO.setup(VOICE_INPUT_PIN, GPIO.IN)
+GPIO.setup(EXIT_PIN, GPIO.IN, GPIO.PUD_DOWN)
+GPIO.setup(VOICE_INPUT_PIN, GPIO.IN, GPIO.PUD_DOWN)
 
 def record():
-    file_path = "/audio/command.wav"
-    # recorder = PvRecorder(device_index=20, frame_length=512)
-    p = pyaudio.PyAudio()
+    file_path = "command.wav"
+    recorder = PvRecorder(device_index=2, frame_length=512)
+    # p = pyaudio.PyAudio()
     
-    stream = p.open(format=pyaudio.paInt16,
-                    channels=1,
-                    input_device_index=20,
-                    rate=SAMPLE_RATE,
-                    input=True,
-                    frames_per_buffer=1024)
+    # stream = p.open(format=pyaudio.paInt16,
+    #                 channels=1,
+    #                 rate=SAMPLE_RATE,
+    #                 input=True,
+    #                 frames_per_buffer=1024)
     
     print("Recording...")
     
     frames = []
+    audio = []
+    now = time.time()
+    print(now)
     try:
-        while GPIO.input(VOICE_INPUT_PIN) == GPIO.HIGH:
-            data = stream.read(1024)
-            frames.append(data)
-    except:
-        pass
+        recorder.start()
+
+        while now + 5 > time.time():
+            frame = recorder.read()
+            audio.extend(frame)
+        # Do something ...
+    except KeyboardInterrupt:
+        recorder.stop()
+    finally:
+        recorder.delete()
+    # while GPIO.input(VOICE_INPUT_PIN) == GPIO.HIGH:
+    #     data = stream.read(1024)
+    #     frames.append(data)
 
     print("Recording complete.")
-
     # Stop and close the stream
-    stream.stop_stream()
-    stream.close()
-    p.terminate()
-    # recorder.stop()
-    # recorder.delete()
-
+    # stream.stop_stream()
+    # stream.close()
+    # p.terminate()
     # Save the recorded audio as a WAV file
-    with sf.SoundFile(file_path, 'w', samplerate=SAMPLE_RATE, channels=1) as f:
-        f.write(frames)
-
+    if not os.path.exists(file_path):
+        os.makedirs(file_path)
+    with wave.open(file_path, 'w') as f:
+        f.setparams((1, 2, 16000, 512, "NONE", "NONE"))
+        f.writeframes(struct.pack("h" * len(audio), *audio))
 
     print(f"Audio saved as: {file_path}")
 
@@ -78,7 +87,8 @@ def whereState(filter):
     left_detection, right_detection = cam.detect()
     syn = Synthesis(left_detection, right_detection, filter=filter)
     output = syn.output()
-
+    print("output:")
+    print(output)
     audio = Audio()
     audio.run(output)
 
@@ -89,7 +99,8 @@ def whatState():
     left_detection, right_detection = cam.detect()
     syn = Synthesis(left_detection, right_detection)
     output = syn.output()
-
+    print("output:")
+    print(output)
     audio = Audio()
     audio.run(output)
 

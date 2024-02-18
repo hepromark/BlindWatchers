@@ -32,7 +32,7 @@ class Audio:
         source.set_max_distance(10.0)
         # Play the source
         source.play()
-
+        print("playing audio")
         while source.get_state() == AL_PLAYING:
             source.set_position(self.position)
         #close the source
@@ -46,7 +46,9 @@ class Audio:
     def __text_to_speech(self, position, text):
         self.position = position
         self.text = text
-        if(text == ""):
+        print("converting text to speech...")
+        print(self.text)
+        if(self.text == ""):
             return
         # Passing the text and language to the engine
         tts = gTTS(text=self.text, tld=self.voice, slow=self.slow) 
@@ -59,7 +61,8 @@ class Audio:
         self.__play_spatial_audio("tmp.wav")
          
     def run(self, arr):
-        self.__text_to_speech(arr[1], arr[0])
+        for i in range(len(arr)):
+            self.__text_to_speech(arr[i][1], str(arr[i][0]))
     
 # if __name__ == "__main__":
 #     audio = Audio(voice="co.uk", slow=False)

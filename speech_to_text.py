@@ -32,7 +32,7 @@ class SpeechToText():
         "scissors": "scissor", "teddy bears": "teddy bear", "hair driers": "hair drier",
         "toothbrushes": "toothbrush"}
 
-        self.STATE_1_COMMAND = ["what is around", "what's around"]
+        self.STATE_1_COMMAND = ["what is around", "what's around", "what is around me", "what's around me", "what is around here", "what's around here"]
 
         self.client = speech.SpeechClient(credentials=self.CREDENTIALS)
         self.audio_file = "command.wav"
@@ -41,7 +41,8 @@ class SpeechToText():
     def take_voice_command(self):
         text = self.__convert_to_text__()
         print(text)
-
+        if text == "":
+            return [-1, []]
         if not text:
             return [-1, []]
 
