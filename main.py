@@ -17,9 +17,9 @@ EXIT_PIN = 12
 VOICE_INPUT_PIN = 16
 SAMPLE_RATE = 48000
 print("INITIALIZE")
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(EXIT_PIN, GPIO.IN)
-GPIO.setup(VOICE_INPUT_PIN, GPIO.IN)
+# GPIO.setmode(GPIO.BOARD)
+# GPIO.setup(EXIT_PIN, GPIO.IN)
+# GPIO.setup(VOICE_INPUT_PIN, GPIO.IN)
 
 def record():
     file_path = "command.wav"
@@ -69,8 +69,8 @@ def record():
 
 def waitState():
     print("Entering Wait State")
-    while GPIO.input(VOICE_INPUT_PIN) == GPIO.LOW:
-        time.sleep(.01)
+    #while GPIO.input(VOICE_INPUT_PIN) == GPIO.LOW:
+     #   time.sleep(.01)
     record()
     print("Exiting Wait")
     converter = SpeechToText()
