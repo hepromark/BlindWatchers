@@ -40,16 +40,15 @@ class Synthesis:
 
     def getSpacial(self, x, y, w, h, isRight):
         x = x + w // 2
-        y = y - h // 2
         if not isRight:
             x = x - self.width
         
         angleFromCenter = x / self.width * self.ANGLE
         
-        x = int(self.radius * math.sin(90 - angleFromCenter))
-        y = int(self.radius * math.cos(90 - angleFromCenter))
+        newX = int(self.radius * math.sin(90 - angleFromCenter))
+        newY = int(self.radius * math.cos(90 - angleFromCenter))
 
-        return angleFromCenter, [x, y, 0]
+        return angleFromCenter, [newX, newY, 0]
     
     def getSentence(self, angle, isRight, className):
         #removing negative angle
