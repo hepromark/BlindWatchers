@@ -45,10 +45,10 @@ class Synthesis:
         
         angleFromCenter = x / self.width * self.ANGLE
         
-        x = int(self.radius * math.sin(90 - angleFromCenter))
-        y = int(self.radius * math.cos(90 - angleFromCenter))
+        newX = int(self.radius * math.sin(90 - angleFromCenter))
+        newY = int(self.radius * math.cos(90 - angleFromCenter))
 
-        return angleFromCenter, [x, y, 0]
+        return angleFromCenter, [newX, newY, 0]
     
     def getSentence(self, angle, isRight, className):
         #removing negative angle
