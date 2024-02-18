@@ -11,7 +11,7 @@ from pydub import AudioSegment
 
 
 class Audio:
-    def __init__(self, pitch=1.0, voice="en", slow=False):
+    def __init__(self, pitch=1.0, voice="ca", slow=False):
         self.position = [0,0,0]
         self.pitch = pitch
         self.voice = voice
@@ -54,14 +54,12 @@ class Audio:
         tts.save('tmp.mp3')
         
         # convert to wav so that openal can play it
-        audio.__convert_mp3_to_wav('tmp.mp3', 'tmp.wav') 
-        audio.play_spatial_audio("tmp.wav")
+        self.__convert_mp3_to_wav('tmp.mp3', 'tmp.wav') 
+        self.play_spatial_audio("tmp.wav")
             
     
-if __name__ == "__main__":
-    audio = Audio(voice="co.uk", slow=False)
-    audio.text_to_speech([-50, 0.0, -0.5], "Hello, this is a spatial audio test.")
-    audio.text_to_speech([-0, 10.0, -0.5], "It works! so cool! I can't believe it!")
-    audio.text_to_speech([50, 0.0, -0.5], "W.")
-    audio.text_to_speech([0, -10.0, -0.5], "BIG W.")
+# if __name__ == "__main__":
+#     audio = Audio(voice="co.uk", slow=False)
+#     audio.text_to_speech([-50, 0.0, -0.5], "Hello, this is a spatial audio test.") # usage
+
     
