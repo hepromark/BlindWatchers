@@ -41,7 +41,7 @@ def record():
     try:
         recorder.start()
 
-        while now + 10 > time.time():
+        while now + 3 > time.time():
             frame = recorder.read()
             audio.extend(frame)
         # Do something ...
@@ -88,7 +88,8 @@ def whereState(filter):
     left_detection, right_detection = cam.detect()
     syn = Synthesis(left_detection, right_detection, filter=filter)
     output = syn.output()
-
+    print("output:")
+    print(output)
     audio = Audio()
     audio.run(output)
 
@@ -99,7 +100,8 @@ def whatState():
     left_detection, right_detection = cam.detect()
     syn = Synthesis(left_detection, right_detection)
     output = syn.output()
-
+    print("output:")
+    print(output)
     audio = Audio()
     audio.run(output)
 
