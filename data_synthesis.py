@@ -95,40 +95,45 @@ class Synthesis:
             return "A " + className + " is straight ahead"
 
     def transform(self, isRight : bool, view):
-        #output [[string, 3d pos]]
         output = []
-
-        summary_sentence = ""
-        object_freq = {}
-
-        direction = "right" if isRight else "left"
         for object in view:
-            if object[4] not in object_freq.keys():
-                object_freq[object[4]] = 1
-            else:
-                object_freq[object[4]] += 1
-
             angle, quards = self.getSpacial(object[0], object[1], object[2], object[3], isRight)
 
             sentence = self.getSentence(angle, isRight, object[4])
 
             output.append([sentence, quards])
-        
-        # Process summary sentence
-        if len(object_freq.keys()):
-            summary_sentence = "There are"
-        for key, value in object_freq.items():
-            summary_sentence += f' {value} {key}s'
-
-        output.insert(0,[summary_sentence, [0, 0, 0]])
-
         return output
 
     def setRadius(self, radius):
         self.radius = radius
 
+    def getSummary(self, leftView, rightView):
+        summary_sentence = ""
+        object_freq = {}
+
+        for object in leftView:
+            if object[4] not in object_freq.keys():
+                object_freq[object[4]] = 1
+            else:
+                object_freq[object[4]] += 1
+
+        for object in rightView:
+            if object[4] not in object_freq.keys():
+                object_freq[object[4]] = 1
+            else:
+                object_freq[object[4]] += 1
+
+        # Process summary sentence
+        if len(object_freq.keys()):
+            summary_sentence = "There are"
+        for key, value in object_freq.items():
+            summary_sentence += f' {value} {key}s'
+        
+        return [summary_sentence, [0, 0, 0]]
+
     def output(self):
         self.removeIntersection()
+        summary = self.getSummary(self.left, self.right)
         left = self.transform(isRight=False, view = self.left)
         right = self.transform(isRight = True, view = self.right)
-        return left + right
+        return summary + left + right
