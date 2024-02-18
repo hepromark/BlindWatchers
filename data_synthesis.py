@@ -42,7 +42,7 @@ class Synthesis:
         angle = angle if isRight else -1 * angle 
         direction = "right" if isRight else "left"
         
-        return "A " + className + " is " + angle + " to the " + direction 
+        return "A " + className + " is " + str(angle) + " to the " + direction 
 
 
     def transform(self, isRight : bool, view):
@@ -52,9 +52,9 @@ class Synthesis:
         for object in view:
             angle, quards = self.getSpacial(object[0], object[1], object[2], object[3], isRight)
 
-            sentence = self.getSentence(self, angle, isRight, object[4])
+            sentence = self.getSentence(angle, isRight, object[4])
 
-            output.append(sentence, quards)
+            output.append([sentence, quards])
         return output
 
     def setRadius(self, radius):
@@ -65,8 +65,3 @@ class Synthesis:
         left = self.transform(isRight=False, view = self.left)
         right = self.transform(isRight = True, view = self.right)
         return left + right
-            
-        
-            
-
-    
