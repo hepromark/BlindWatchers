@@ -7,6 +7,7 @@ import time
 import wave
 import struct
 import pyaudio
+import os
 import soundfile as sf
 from pvrecorder import PvRecorder
 
@@ -21,7 +22,7 @@ GPIO.setup(EXIT_PIN, GPIO.IN)
 GPIO.setup(VOICE_INPUT_PIN, GPIO.IN)
 
 def record():
-    file_path = "/audio/command.wav"
+    file_path = "command.wav"
     recorder = PvRecorder(device_index=20, frame_length=512)
     # p = pyaudio.PyAudio()
     
@@ -59,8 +60,10 @@ def record():
     # stream.close()
     # p.terminate()
     # Save the recorded audio as a WAV file
+    if not os.path.exists(file_path):
+        os.makedirs(file_path)
     with wave.open(file_path, 'w') as f:
-        f.setparams((1, 2, 48000, 512, "NONE", "NONE"))
+        f.setparams((1, 2, 16000, 512, "NONE", "NONE"))
         f.writeframes(struct.pack("h" * len(audio), *audio))
 
     print(f"Audio saved as: {file_path}")
