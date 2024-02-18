@@ -42,9 +42,10 @@ class Synthesis:
         angle = angle if isRight else -1 * angle 
         angle = int(round(angle))
         direction = "right" if isRight else "left"
-        
-        return "A " + className + " is " + str(angle) + " degrees to the " + direction 
-
+        if angle != 0:
+            return "A " + className + " is " + str(angle) + " degrees to the " + direction 
+        else:
+            return "A " + className + " is straight ahead"
 
     def transform(self, isRight : bool, view):
         #output [[string, 3d pos]]
