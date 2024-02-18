@@ -82,6 +82,7 @@ def whatState():
 
 if __name__ == "__main__":
     print("Entering Main")
+    GPIO.cleanup()
     while GPIO.input(EXIT_PIN) == GPIO.LOW:
         waitState()
     
