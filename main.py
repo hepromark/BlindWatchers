@@ -56,8 +56,6 @@ def record():
     # stream.stop_stream()
     # stream.close()
     # p.terminate()
-    recorder.stop()
-    recorder.delete()
     # Save the recorded audio as a WAV file
     with wave.open(file_path, 'w') as f:
         f.setparams((1, 2, 48000, 512, "NONE", "NONE"))
