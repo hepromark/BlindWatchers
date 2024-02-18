@@ -11,8 +11,9 @@ EXIT_PIN = 18
 VOICE_INPUT_PIN = 23
 SAMPLE_RATE = 48000
 
-GPIO.setup(reset, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(voice, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(EXIT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(VOICE_INPUT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 def record():
     file_path = "/audio/command.wav"
