@@ -35,10 +35,12 @@ def record():
     
     frames = []
     audio = []
+    now = time.time()
+    print(now)
     try:
         recorder.start()
 
-        while GPIO.input(VOICE_INPUT_PIN) == GPIO.HIGH:
+        while now < 100 + time.time():
             frame = recorder.read()
             audio.extend(frame)
         # Do something ...
