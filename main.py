@@ -23,7 +23,7 @@ GPIO.setup(VOICE_INPUT_PIN, GPIO.IN)
 
 def record():
     file_path = "command.wav"
-    recorder = PvRecorder(device_index=20, frame_length=512)
+    recorder = PvRecorder(device_index=2, frame_length=512)
     # p = pyaudio.PyAudio()
     
     # stream = p.open(format=pyaudio.paInt16,
