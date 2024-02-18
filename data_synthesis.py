@@ -65,8 +65,6 @@ class Synthesis:
 
         for item in removeRight:
             right.pop(item)
-        for item in removeLeft:
-            left.pop(item)
 
         self.left = left
         self.right = right
