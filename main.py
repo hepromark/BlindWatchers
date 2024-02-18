@@ -100,6 +100,6 @@ def whatState():
 
 if __name__ == "__main__":
     print("Entering Main")
-    while GPIO.input(EXIT_PIN) == GPIO.LOW:
-        waitState()
+    # while GPIO.input(EXIT_PIN) == GPIO.LOW:
+    waitState()
     
