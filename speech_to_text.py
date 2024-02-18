@@ -65,12 +65,14 @@ class SpeechToText():
             audio = speech.RecognitionAudio(content=content)
 
         config = speech.RecognitionConfig(
-            encoding=speech.RecognitionConfig.AudioEncoding.MP3,
-            sample_rate_hertz=44100,
+            encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+            sample_rate_hertz=16000,
             language_code='en-US'
         )
 
         response = self.client.recognize(config=config, audio=audio)
+        if len(response.results) == 0:
+            return ""
         text = response.results[0].alternatives[0].transcript
 
         return text
