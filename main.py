@@ -41,9 +41,8 @@ def record():
     try:
         recorder.start()
 
-        while now + 5 > time.time():
+        while now + 10 > time.time():
             frame = recorder.read()
-            print(frame)
             audio.extend(frame)
         # Do something ...
     except KeyboardInterrupt:
@@ -55,6 +54,7 @@ def record():
     #     frames.append(data)
 
     print("Recording complete.")
+    print(audio)
     # Stop and close the stream
     # stream.stop_stream()
     # stream.close()
