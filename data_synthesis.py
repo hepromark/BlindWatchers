@@ -99,7 +99,7 @@ class Synthesis:
         output = []
 
         summary_sentence = ""
-        object_freq = defaultdict(0)
+        object_freq = defaultdict()
 
         direction = "right" if isRight else "left"
         for object in view:
