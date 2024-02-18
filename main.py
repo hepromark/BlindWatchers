@@ -4,9 +4,14 @@ from speech_to_text import SpeechToText
 from audio import Audio
 import RPi.GPIO as GPIO
 import time
+import wave
+import struct
 import pyaudio
 import soundfile as sf
+from pvrecorder import PvRecorder
 
+for index, device in enumerate(PvRecorder.get_available_devices()):
+    print(f"[{index}] {device}")
 EXIT_PIN = 18
 VOICE_INPUT_PIN = 23
 SAMPLE_RATE = 48000
@@ -17,31 +22,46 @@ GPIO.setup(VOICE_INPUT_PIN, GPIO.IN)
 
 def record():
     file_path = "/audio/command.wav"
-    p = pyaudio.PyAudio()
+    recorder = PvRecorder(device_index=20, frame_length=512)
+    # p = pyaudio.PyAudio()
     
-    stream = p.open(format=pyaudio.paInt16,
-                    channels=1,
-                    rate=SAMPLE_RATE,
-                    input=True,
-                    frames_per_buffer=1024)
+    # stream = p.open(format=pyaudio.paInt16,
+    #                 channels=1,
+    #                 rate=SAMPLE_RATE,
+    #                 input=True,
+    #                 frames_per_buffer=1024)
     
     print("Recording...")
     
     frames = []
-    while GPIO.input(VOICE_INPUT_PIN) == GPIO.HIGH:
-        data = stream.read(1024)
-        frames.append(data)
+    audio = []
+    try:
+        recorder.start()
+
+        while GPIO.input(VOICE_INPUT_PIN) == GPIO.HIGH:
+            frame = recorder.read()
+            audio.extend(frame)
+        # Do something ...
+    except KeyboardInterrupt:
+        recorder.stop()
+    finally:
+        recorder.delete()
+    # while GPIO.input(VOICE_INPUT_PIN) == GPIO.HIGH:
+    #     data = stream.read(1024)
+    #     frames.append(data)
 
     print("Recording complete.")
 
     # Stop and close the stream
-    stream.stop_stream()
-    stream.close()
-    p.terminate()
-
+    # stream.stop_stream()
+    # stream.close()
+    # p.terminate()
+    recorder.stop()
+    recorder.delete()
     # Save the recorded audio as a WAV file
-    with sf.SoundFile(file_path, 'w', samplerate=SAMPLE_RATE, channels=1) as f:
-        f.write(frames)
+    with wave.open(file_path, 'w') as f:
+        f.setparams((1, 2, 48000, 512, "NONE", "NONE"))
+        f.writeframes(struct.pack("h" * len(audio), *audio))
 
     print(f"Audio saved as: {file_path}")
 
