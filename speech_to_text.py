@@ -41,7 +41,6 @@ class SpeechToText():
     def take_voice_command(self):
         text = self.__convert_to_text__()
         print(text)
-        print("Speech text: {}").__format__(text)
 
         if not text:
             return [-1, []]
