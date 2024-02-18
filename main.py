@@ -23,7 +23,7 @@ print("INITIALIZE")
 
 def record():
     file_path = "command.wav"
-    recorder = PvRecorder(device_index=2, frame_length=512)
+    recorder = PvRecorder(device_index=-1, frame_length=512)
     # p = pyaudio.PyAudio()
     
     # stream = p.open(format=pyaudio.paInt16,
@@ -52,7 +52,7 @@ def record():
     # while GPIO.input(VOICE_INPUT_PIN) == GPIO.HIGH:
     #     data = stream.read(1024)
     #     frames.append(data)
-
+    print(audio)
     print("Recording complete.")
     # Stop and close the stream
     # stream.stop_stream()
