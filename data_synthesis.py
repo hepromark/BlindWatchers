@@ -63,13 +63,28 @@ class Synthesis:
     def transform(self, isRight : bool, view):
         #output [[string, 3d pos]]
         output = []
+
+        summary_sentence = ""
+        object_freq = dict()
+
         direction = "right" if isRight else "left"
         for object in view:
+            object_freq[object[4]] += 1
+
             angle, quards = self.getSpacial(object[0], object[1], object[2], object[3], isRight)
 
             sentence = self.getSentence(angle, isRight, object[4])
 
             output.append([sentence, quards])
+        
+        # Process summary sentence
+        if len(object_freq.keys()):
+            summary_sentence = "There are"
+        for key, value in object_freq.items():
+            summary_sentence += f' {value} {key}s'
+
+        output = [summary_sentence, [0, 0, 0]] + output
+
         return output
 
     def setRadius(self, radius):
