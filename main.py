@@ -18,8 +18,8 @@ VOICE_INPUT_PIN = 16
 SAMPLE_RATE = 48000
 print("INITIALIZE")
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(EXIT_PIN, GPIO.IN, GPIO.PUD_DOWN)
-GPIO.setup(VOICE_INPUT_PIN, GPIO.IN, GPIO.PUD_DOWN)
+GPIO.setup(EXIT_PIN, GPIO.IN)
+GPIO.setup(VOICE_INPUT_PIN, GPIO.IN)
 
 def record():
     file_path = "command.wav"
@@ -106,6 +106,6 @@ def whatState():
 
 if __name__ == "__main__":
     print("Entering Main")
-    while GPIO.input(EXIT_PIN) == GPIO.LOW:
-        waitState()
+    #while GPIO.input(EXIT_PIN) == GPIO.LOW:
+    waitState()
     
