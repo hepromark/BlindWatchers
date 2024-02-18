@@ -40,9 +40,10 @@ class Synthesis:
     def getSentence(self, angle, isRight, className):
         #removing negative angle
         angle = angle if isRight else -1 * angle 
+        angle = int(round(angle))
         direction = "right" if isRight else "left"
         
-        return "A " + className + " is " + str(angle) + " to the " + direction 
+        return "A " + className + " is " + str(angle) + " degrees to the " + direction 
 
 
     def transform(self, isRight : bool, view):
