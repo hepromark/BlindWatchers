@@ -71,6 +71,8 @@ class SpeechToText():
         )
 
         response = self.client.recognize(config=config, audio=audio)
+        if len(response.results) == 0:
+            return ""
         text = response.results[0].alternatives[0].transcript
 
         return text
