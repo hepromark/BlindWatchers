@@ -78,6 +78,8 @@ def waitState():
 
     if function == 1:
         whatState()
+    elif function == -1:
+        waitState()
     else:
         whereState(filter)
 
