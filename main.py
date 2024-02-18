@@ -4,15 +4,23 @@ from speech_to_text import SpeechToText
 from audio import Audio
 import RPi.GPIO as GPIO
 import time
+import wave
+import struct
 import pyaudio
 import soundfile as sf
+from pvrecorder import PvRecorder
 
-EXIT_PIN = 18
-VOICE_INPUT_PIN = 23
+for index, device in enumerate(PvRecorder.get_available_devices()):
+    print(f"[{index}] {device}")
+EXIT_PIN = 12
+VOICE_INPUT_PIN = 16
 SAMPLE_RATE = 48000
 
-GPIO.setup(reset, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(voice, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+print("INITIALIZE")
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(EXIT_PIN, GPIO.IN)
+GPIO.setup(VOICE_INPUT_PIN, GPIO.IN)
 
 def record():
     file_path = "/audio/command.wav"
@@ -44,11 +52,13 @@ def record():
 
     print(f"Audio saved as: {file_path}")
 
+
 def waitState():
+    print("Entering Wait State")
     while GPIO.input(VOICE_INPUT_PIN) == GPIO.LOW:
         time.sleep(.01)
     record()
-
+    print("Exiting Wait")
     converter = SpeechToText()
     function, filter = converter.take_voice_command()
 
@@ -58,25 +68,28 @@ def waitState():
         whereState(filter)
 
 def whereState(filter):
+    print("Entering Where")
     cam = CameraDriver(0,1)
     left_detection, right_detection = cam.detect()
     syn = Synthesis(left_detection, right_detection, filter=filter)
     output = syn.output()
 
     audio = Audio()
-    audio.run()
+    audio.run(output)
 
 
 def whatState():
+    print("Entering What")
     cam = CameraDriver(0,1)
     left_detection, right_detection = cam.detect()
     syn = Synthesis(left_detection, right_detection)
     output = syn.output()
 
     audio = Audio()
-    audio.run()
+    audio.run(output)
 
 if __name__ == "__main__":
+    print("Entering Main")
     while GPIO.input(EXIT_PIN) == GPIO.LOW:
         waitState()
     
