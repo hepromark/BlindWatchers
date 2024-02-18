@@ -18,8 +18,8 @@ VOICE_INPUT_PIN = 16
 SAMPLE_RATE = 48000
 print("INITIALIZE")
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(EXIT_PIN, GPIO.IN)
-GPIO.setup(VOICE_INPUT_PIN, GPIO.IN)
+GPIO.setup(EXIT_PIN, GPIO.IN, GPIO.FALLING)
+GPIO.setup(VOICE_INPUT_PIN, GPIO.IN, GPIO.FALLING)
 
 def record():
     file_path = "command.wav"
@@ -78,8 +78,6 @@ def waitState():
 
     if function == 1:
         whatState()
-    elif function == -1:
-        waitState()
     else:
         whereState(filter)
 
