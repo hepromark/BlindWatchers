@@ -54,7 +54,7 @@ def record():
     #     frames.append(data)
 
     print("Recording complete.")
-
+    print(audio)
     # Stop and close the stream
     # stream.stop_stream()
     # stream.close()
