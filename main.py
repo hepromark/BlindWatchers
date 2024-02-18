@@ -35,9 +35,12 @@ def record():
     print("Recording...")
     
     frames = []
-    while GPIO.input(VOICE_INPUT_PIN) == GPIO.HIGH:
-        data = stream.read(1024)
-        frames.append(data)
+    try:
+        while GPIO.input(VOICE_INPUT_PIN) == GPIO.HIGH:
+            data = stream.read(1024)
+            frames.append(data)
+    except:
+        pass
 
     print("Recording complete.")
 
