@@ -99,11 +99,14 @@ class Synthesis:
         output = []
 
         summary_sentence = ""
-        object_freq = defaultdict()
+        object_freq = {}
 
         direction = "right" if isRight else "left"
         for object in view:
-            object_freq[object[4]] += 1
+            if object[4] not in object_freq.keys():
+                object_freq[object[4]] = 1
+            else:
+                object_freq[object[4]] += 1
 
             angle, quards = self.getSpacial(object[0], object[1], object[2], object[3], isRight)
 
