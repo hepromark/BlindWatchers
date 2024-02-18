@@ -1,5 +1,4 @@
 import cv2
-import numpy as np
 from ultralytics import YOLO
 
 import matplotlib.pyplot as plt
@@ -20,13 +19,13 @@ class CameraDriver():
             self.cam_2 = cv2.VideoCapture(cam_port_2)
     
     def detect(self):
-        frame1, frame2 = self._get_frame()
-        return self._process_frame([frame1, frame2])
+        frame1, frame2 = self.__get_frame__()
+        return self.__process_frame__([frame1, frame2])
 
     def test(self):
-        frame1, frame2 = self._get_frame()
+        frame1, frame2 = self.__get_frame__()
         print("===========================================")
-        detections = self._process_frame([frame1, frame2])
+        detections = self.__process_frame__([frame1, frame2])
         print(detections)
 
     def __process_frame__(self, frames):
