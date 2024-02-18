@@ -10,7 +10,7 @@ import pyaudio
 import soundfile as sf
 from pvrecorder import PvRecorder
 
-for index, device in enumerate(PvRecorder.get_audio_devices()):
+for index, device in enumerate(PvRecorder.get_available_devices()):
     print(f"[{index}] {device}")
 EXIT_PIN = 18
 VOICE_INPUT_PIN = 23
