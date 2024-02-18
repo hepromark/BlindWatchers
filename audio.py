@@ -30,6 +30,8 @@ class Audio:
         source.set_pitch(self.pitch)
         source.set_rolloff_factor(0.9)
         source.set_max_distance(10.0)
+        if len(self.position) !=3:
+            self.position = [0,0,0]
         # Play the source
         source.play()
         print("playing audio")
