@@ -49,11 +49,11 @@ def record():
     p.terminate()
     recorder.stop()
     recorder.delete()
-    
+
     # Save the recorded audio as a WAV file
-    with wave.open(file_path, 'w') as f:
-        f.setparams((1, 2, 48000, 512, "NONE", "NONE"))
-        f.writeframes(struct.pack("h" * len(audio), *audio))
+    with sf.SoundFile(file_path, 'w', samplerate=SAMPLE_RATE, channels=1) as f:
+        f.write(frames)
+
 
     print(f"Audio saved as: {file_path}")
 
