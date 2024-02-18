@@ -41,7 +41,7 @@ def record():
     try:
         recorder.start()
 
-        while now + 3 > time.time():
+        while now + 5 > time.time():
             frame = recorder.read()
             audio.extend(frame)
         # Do something ...
@@ -108,6 +108,6 @@ def whatState():
 
 if __name__ == "__main__":
     print("Entering Main")
-    # while GPIO.input(EXIT_PIN) == GPIO.LOW:
-    waitState()
+    while GPIO.input(EXIT_PIN) == GPIO.LOW:
+        waitState()
     
