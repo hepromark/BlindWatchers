@@ -1,4 +1,5 @@
 import math
+from collections import defaultdict 
 
 class Synthesis:
     def __init__(self, left_obj, right_obj, filter = None, negFilter = None):
@@ -98,7 +99,7 @@ class Synthesis:
         output = []
 
         summary_sentence = ""
-        object_freq = dict()
+        object_freq = defaultdict(0)
 
         direction = "right" if isRight else "left"
         for object in view:
