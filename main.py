@@ -22,11 +22,12 @@ GPIO.setup(VOICE_INPUT_PIN, GPIO.IN)
 
 def record():
     file_path = "/audio/command.wav"
-    recorder = PvRecorder(device_index=20, frame_length=512)
+    # recorder = PvRecorder(device_index=20, frame_length=512)
     p = pyaudio.PyAudio()
     
     stream = p.open(format=pyaudio.paInt16,
                     channels=1,
+                    input_device_index=20,
                     rate=SAMPLE_RATE,
                     input=True,
                     frames_per_buffer=1024)
@@ -47,8 +48,8 @@ def record():
     stream.stop_stream()
     stream.close()
     p.terminate()
-    recorder.stop()
-    recorder.delete()
+    # recorder.stop()
+    # recorder.delete()
 
     # Save the recorded audio as a WAV file
     with sf.SoundFile(file_path, 'w', samplerate=SAMPLE_RATE, channels=1) as f:
