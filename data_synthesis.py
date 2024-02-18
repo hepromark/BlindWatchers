@@ -6,7 +6,7 @@ class Synthesis:
         self.width = 640
         self.height = 480
         self.radius = 30
-        self.intersection = .9
+        self.iou = .9
         self.edgeTolerance = 30
         self.ANGLE = 110
 
@@ -45,10 +45,31 @@ class Synthesis:
         for count in range(len(right) - 1, 0, -1):
             if right[count][0] + right[count][2] - self.width > -self.edgeTolerance:
                 rightEdge.append(count)
-        
 
-        for r in range(len(self.left) -1):
-            for l in range()
+        removeRight = []
+        removeLeft = []
+        for l in range(len(leftEdge) - 1):
+            for r in range(len(rightEdge) - 1):
+                intersection = min(left[l][1], right[r][1]) - max(left[l][1]-left[l][3], right[l][1]-right[l][3])
+                
+                union = max(left[l][1], right[r][1]) - min(left[l][1]-left[l][3], right[l][1]-right[l][3])
+                if intersection / union < self.iou and intersection / union > 0:
+                    if l not in removeLeft:
+                        removeLeft.append(l)
+                    elif r not in removeRight:
+                        removeRight.append(r)
+
+        removeLeft = sorted(removeLeft)
+        removeRight = sorted(removeRight)
+
+        for item in removeRight:
+            right.pop(item)
+        for item in removeLeft:
+            left.pop(item)
+
+        self.left = left
+        self.right = right
+
 
     def getSpacial(self, x, y, w, h, isRight):
         x = x + w // 2
