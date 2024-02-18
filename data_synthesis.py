@@ -1,28 +1,42 @@
 import math
 
 class Synthesis:
-    def __init__(self, left_obj, right_obj, filter = None):
+    def __init__(self, left_obj, right_obj, filter = None, negFilter = None):
         #objects in the form of [[x, y, w, h, class name]] x, y (0,0) being top left
         self.width = 640
         self.height = 480
         self.radius = 30
         self.intersection = .9
+        self.edgeTolerance = 30
         self.ANGLE = 110
 
-        if filter != None:
+        self.left, self.right = self.filter(filter, negFilter, left_obj, right_obj)
+
+    def filter(self, filter, negFilter, left_obj, right_obj):
+        if negFilter != None:
             for count in range(len(left_obj) - 1, 0, -1):
-                if left_obj[count][4] in filter:
+                if left_obj[count][4] in negFilter:
                     left_obj.pop(count)
 
             for count in range(len(right_obj) - 1, 0, -1):
-                if right_obj[count][4] in filter:
+                if right_obj[count][4] in negFilter:
                     right_obj.pop(count)
         
-        self.left = left_obj
-        self.right = right_obj
+        if filter != None:
+            for count in range(len(left_obj) - 1, 0, -1):
+                if left_obj[count][4] not in filter:
+                    left_obj.pop(count)
+
+            for count in range(len(right_obj) - 1, 0, -1):
+                if right_obj[count][4] not in filter:
+                    right_obj.pop(count)
+        return left_obj, right_obj
 
     def removeIntersection(self):
-        print("hello")
+        leftEdge = []
+        rightEdge = []
+        for r in range(len(self.left) -1):
+            for l in range()
 
     def getSpacial(self, x, y, w, h, isRight):
         x = x + w // 2
