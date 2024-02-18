@@ -8,12 +8,12 @@ import pyaudio
 import soundfile as sf
 
 EXIT_PIN = 18
-VOICE_INPUT_PIN = 23
+VOICE_INPUT_PIN = 15
 SAMPLE_RATE = 48000
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(EXIT_PIN, GPIO.IN, initial=GPIO.LOW)
-GPIO.setup(VOICE_INPUT_PIN, GPIO.IN, initial=GPIO.LOW)
+GPIO.setup(EXIT_PIN, GPIO.IN)
+GPIO.setup(VOICE_INPUT_PIN, GPIO.IN)
 
 def record():
     file_path = "/audio/command.wav"
