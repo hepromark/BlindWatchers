@@ -40,7 +40,6 @@ class Synthesis:
 
     def getSpacial(self, x, y, w, h, isRight):
         x = x + w // 2
-        y = y - h // 2
         if not isRight:
             x = x - self.width
         
