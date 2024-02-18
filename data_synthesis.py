@@ -32,11 +32,23 @@ class Synthesis:
                     right_obj.pop(count)
         return left_obj, right_obj
 
-    # def removeIntersection(self):
-    #     leftEdge = []
-    #     rightEdge = []
-    #     for r in range(len(self.left) -1):
-    #         for l in range()
+    def removeIntersection(self):
+        left = self.left
+        right = self.right
+        leftEdge = []
+        rightEdge = []
+
+        for count in range(len(left) - 1, 0, -1):
+            if left[count][0] + left[count][2] - self.width > -self.edgeTolerance:
+                leftEdge.append(count)
+
+        for count in range(len(right) - 1, 0, -1):
+            if right[count][0] + right[count][2] - self.width > -self.edgeTolerance:
+                rightEdge.append(count)
+        
+
+        for r in range(len(self.left) -1):
+            for l in range()
 
     def getSpacial(self, x, y, w, h, isRight):
         x = x + w // 2
@@ -91,7 +103,7 @@ class Synthesis:
         self.radius = radius
 
     def output(self):
-        #self.removeIntersection()
+        self.removeIntersection()
         left = self.transform(isRight=False, view = self.left)
         right = self.transform(isRight = True, view = self.right)
         return left + right
